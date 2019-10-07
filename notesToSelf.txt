@@ -1,7 +1,0 @@
-"npm run watch" to compile continuously
-"npm run build" to run once
-"node dist/whatever.ts" to run
-
-To get this setup from scratch:
-* need package.json and tsconf.json
-* need to then run "npm -i --save typescript typescript-collections"
