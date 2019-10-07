@@ -23,10 +23,18 @@ function doAction(command : string) {
 }
 
 // Enter commands
-doAction('CreatePlace(BobsHouse, Cottage)');
+doAction('CreatePlace(BobsHouse, Camp)');
+
+doAction('CreateCharacter(Sonia, F, 40)');
+doAction('ChangeClothing(Sonia, LightArmour)');
+doAction('SetPosition(Sonia, BobsHouse.Stall)');
+doAction('SetHairStyle(Sonia, Spiky)');
+
 doAction('CreateCharacter(Bob, M, 25)');
 doAction('ChangeClothing(Bob, Peasant)');
-doAction('SetPosition(Bob, BobsHouse.Door)');
+doAction('SetPosition(Bob, BobsHouse.Firepit)');
+doAction('SetHairStyle(Bob, Spiky)');
+
 doAction('EnableIcon("Open_Door", Open, BobsHouse.Door, "Leave the house", true)');
 doAction('Game');
 
@@ -37,7 +45,7 @@ console.error('Testing use of STDERR');
 function processMessage(msg : string) {
   switch(msg) { 
     case 'Selected Start':
-      doAction('SetCameraFocus(Bob)');
+      doAction('SetCameraFocus(Sonia)');
       doAction('EnableInput()');
       break;
     case '"Open_Door" BobsHouse.Door':
