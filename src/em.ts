@@ -57,8 +57,8 @@ doAction('CreateItem(TheApple, Apple)');
 
 doAction('Game');
 
-let onFinish = {} // Mutable dictionary of callbacks
-
+// Mutable dictionary of callbacks
+let onFinish = {}
 
 function doSequence(actions : string[]) {
   if(actions.length > 0) {
@@ -150,69 +150,5 @@ rl.on('line', (line) => {
   }
   // Otherwise ignore.
 });
-
-/* 
-// Timer-based automation
-
-function thunkAction(action) {
-  return () => { doAction(action); };
-}
-
-function alternate(interval, f, g) {
-  setTimeout(() => {
-    f();
-    alternate(interval, g, f);
-  }, interval);
-}
-
-function alternateOnFinish(action1 : string, action2 : string) {
-  doAction(action1);
-  onFinish[action1] = () => {alternateOnFinish(action2, action1); };
-}
-
-// alternate(() => {doAction('ChangeClothing(Bob, Merchant)');}, () => {doAction('ChangeClothing(Bob, Peasant)')});
-// alternate(2000, thunkAction('ChangeClothing(Bob, Merchant)'), thunkAction('ChangeClothing(Bob, Peasant)'));
-//alternate(2000, thunkAction('WalkTo(Bob, TheCamp.Stall)'), thunkAction('WalkTo(Bob, TheCamp.FirePit)'));
-
-*/
-
-// The Villanelle way
-let hasKey : string | null = null;
-
-function thunkAction(action) {
-  return () => { doAction(action); };
-}
-
-onFinish['Take(Robin, TheKey)'] = () => {
-  hasKey = "Robin";
-};
-
-const BobBT = sequence([
-  action(() => {return true;}, thunkAction('WalkTo(Bob, TheCamp.Horse')),
-  selector([
-    guard(() => { return hasKey == "Bob"; },
-      sequence([
-        action(() => {return true;}, thunkAction("WalkTo(Bob, TheCamp.Chest)")),
-        action(() => {return true;}, thunkAction("OpenFurniture(Bob, TheCamp.Chest)")),
-        action(() => {return true;}, thunkAction("Take(Bob, TheApple, TheCamp.Chest)")),
-        action(() => {return true;}, thunkAction("WalkTo(Bob, Sonia)")),
-        action(() => {return true;}, thunkAction("Give(Bob, TheApple, Sonia)"))
-      ])
-    ),
-    action(() => {return true;}, thunkAction("WalkTo(Bob, TheCamp.Firepit"))
-  ])
-]);
-
-// Bob's BT:
-// Sequence([
-//    walktoHorse,
-//    Selector([
-//      Guard(hasKey,
-//        Sequence [walk to chest, open chest, take apple, walk to Sonia, give sonia the apple]),
-//      Walk to Firepit;
-//    ]);
-// ]);
-
-
 
 
